@@ -3,8 +3,9 @@
 import { Ripple } from "@/components/magicui/ripple";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Brain } from "lucide-react";
+import { ArrowRight, Brain } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
+import { Button } from "@/components/ui/button";
 export default function Home() {
   const emotions = [
     { value: 0, label: "😓 Distressed", color: "from-red-500/50" },
@@ -81,7 +82,7 @@ export default function Home() {
                     className={`transition-all duration-500 ease-out cursor-pointer hover:scale-105 ${
                       Math.abs(emotion - em.value) < 15
                         ? "opacity-100 scale-110 transform-gpu"
-                        : "opacity-50 scale-110"
+                        : "opacity-50 scale-100"
                     }`}
                     onClick={() => setEmotion(em.value)}
                   >
@@ -109,8 +110,49 @@ export default function Home() {
                 className="py-4"
               />
             </div>
+            <div className="text-center">
+              <p className="text-sm text-muted-foreground animate-pulse">
+                Slide to express how you're feeling today
+              </p>
+            </div>
+          </motion.div>
+
+          {/*Call to Action button*/}
+
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 20 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+          >
+            <Button
+              size="lg"
+              /* onClick={() => setShowDialog(true)} */
+              className="relative group h-12 px-8 rounded-full bg-gradient-to-r from-primary via-primary/90 to-secondary hover:to-primary shadow-lg shadow-primary/20 transition-all duration-500 hover:shadow-xl hover:shadow-primary/30"
+            >
+              <span className="relative z-10 font-medium flex items-center gap-2">
+                Let’s Begin
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+              </span>
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-size-200 bg-pos-0 group-hover:bg-pos-100" />
+            </Button>
           </motion.div>
         </motion.div>
+      </section>
+
+      {/*Features*/}
+      <section className="relative py-20 px-4 overflow-hidden">
+        <div className="max-w-6xl mx-auto">
+          <motion.div className="text-center mb-16 space-y-4 text-white">
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-primary/90 to-primary bg-clip-text text-transparent dark:text-primary/90">
+              How Mind Haven Helps You
+            </h2>
+            <p className="text-foreground dark:text-foreground/95 max-w-2xl mx-auto font-medium text-lg">
+              Discover meaningful mental health support through emotionally
+              intelligent AI.
+            </p>
+          </motion.div>
+        </div>
       </section>
     </div>
   );
