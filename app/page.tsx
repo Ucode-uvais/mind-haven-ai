@@ -8,7 +8,7 @@ import {
   Brain,
   HeartPulse,
   Lightbulb,
-  Lock,
+  Shield,
   MessageSquareHeart,
 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
@@ -39,7 +39,7 @@ export default function Home() {
       delay: 0.4,
     },
     {
-      icon: Lock,
+      icon: Shield,
       title: "Private & Secure",
       description: "Your conversations are always confidential and encrypted",
       color: "from-emerald-500/20",
