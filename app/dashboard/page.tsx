@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Activity,
   ArrowRight,
@@ -39,6 +40,8 @@ const DashboardPage = () => {
   const [showMoodModal, setShowMoodModal] = useState(false);
   const [isSavingMood, setIsSavingMood] = useState(false);
   const [showActivityLogger, setShowActivityLogger] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -93,6 +96,10 @@ const DashboardPage = () => {
     setShowActivityLogger(true);
   };
 
+  const handleStartTherapy = () => {
+    router.push("/therapy/new");
+  };
+
   return (
     <div className="min-h-screen bg-background p-8">
       <Container className="pt-20 pb-8 space-y-6">
@@ -143,6 +150,7 @@ const DashboardPage = () => {
                         "bg-gradient-to-r from-primary/90 to-primary hover:from-primary hover:to-primary/90",
                         "transition-all duration-200 group-hover:translate-y-[-2px]"
                       )}
+                      onClick={() => handleStartTherapy()}
                     >
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
