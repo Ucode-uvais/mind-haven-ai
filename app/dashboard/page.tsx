@@ -32,11 +32,13 @@ import {
 } from "@/components/ui/dialog";
 import { AnxietyGames } from "@/components/games/anxiety-game";
 import { MoodForm } from "@/components/mood/mood-form";
+import { ActivityLogger } from "@/components/activities/activity-logger";
 
 const DashboardPage = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [showMoodModal, setShowMoodModal] = useState(false);
   const [isSavingMood, setIsSavingMood] = useState(false);
+  const [showActivityLogger, setShowActivityLogger] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -85,6 +87,10 @@ const DashboardPage = () => {
     } finally {
       setIsSavingMood(false);
     }
+  };
+
+  const handleAICheckIn = () => {
+    setShowActivityLogger(true);
   };
 
   return (
@@ -186,6 +192,7 @@ const DashboardPage = () => {
                           "justify-center items-center text-center",
                           "transition-all duration-200 group-hover:translate-y-[-2px]"
                         )}
+                        onClick={() => handleAICheckIn()}
                       >
                         <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center mb-2">
                           <CircleCheckBig className="w-5 h-5 text-blue-500" />
@@ -260,10 +267,18 @@ const DashboardPage = () => {
               Move the slider to track your current mood
             </DialogDescription>
           </DialogHeader>
+
           {/*moodform*/}
           <MoodForm onSubmit={handleMoodSubmit} isLoading={isSavingMood} />
         </DialogContent>
       </Dialog>
+
+      {/*Activity Logger*/}
+
+      <ActivityLogger
+        open={showActivityLogger}
+        onOpenChange={setShowActivityLogger}
+      />
     </div>
   );
 };
