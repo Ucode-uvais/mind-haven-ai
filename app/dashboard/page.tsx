@@ -30,6 +30,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { AnxietyGames } from "@/components/games/anxiety-game";
 const DashboardPage = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [showMoodModal, setShowMoodModal] = useState(false);
@@ -227,7 +228,9 @@ const DashboardPage = () => {
 
           {/*content grid for games*/}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-3 space-y-6"></div>
+            <div className="lg:col-span-3 space-y-6">
+              <AnxietyGames />
+            </div>
           </div>
         </div>
       </Container>
