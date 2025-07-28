@@ -15,9 +15,9 @@ export function ForestGame() {
   const [progress, setProgress] = useState(0);
   const [timeLeft, setTimeLeft] = useState(MEDITATION_DURATION);
   const [audioElements] = useState({
-    birds: new Audio("/sounds/birds.mp3"),
+    birdsandriver: new Audio("/sounds/birds&river.mp3"),
+    cicada: new Audio("/sounds/cicada.mp3"),
     wind: new Audio("/sounds/wind.mp3"),
-    leaves: new Audio("/sounds/leaves.mp3"),
   });
 
   useEffect(() => {
