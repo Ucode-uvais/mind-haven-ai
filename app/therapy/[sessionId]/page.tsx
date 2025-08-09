@@ -484,7 +484,7 @@ const TherapyPage = () => {
                 <textarea
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Tell me what is on your mind..."
+                  placeholder="Tell me what is on your mind"
                   className="w-full resize-none rounded-full border bg-muted p-3 pl-4 pr-14 min-h-[48px] focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-200"
                   rows={1}
                   disabled={isTyping}

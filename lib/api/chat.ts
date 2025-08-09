@@ -7,7 +7,7 @@ export interface ChatMessage {
   metadata?: {
     technique: string;
     goal: string;
-    progress: any[];
+    progress: ProgressItem[];
     analysis?: {
       emotionalState: string;
       themes: string[];
@@ -16,6 +16,11 @@ export interface ChatMessage {
       progressIndicators: string[];
     };
   };
+}
+
+export interface ProgressItem {
+  emotionalState?: string;
+  riskLevel?: number;
 }
 
 export interface ChatSession {
@@ -38,7 +43,7 @@ export interface ApiResponse {
   metadata?: {
     technique: string;
     goal: string;
-    progress: any[];
+    progress: ProgressItem[];
   };
 }
 
