@@ -403,7 +403,7 @@ const TherapyPage = () => {
                           </h1>
                         </div>
                         <p className="text-muted-foreground mt-2">
-                          I'm here to listen, support, and help you navigate
+                          I am here to listen, support, and help you navigate
                           your thoughts. How can I guide you today?
                         </p>
                       </div>
