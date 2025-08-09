@@ -18,13 +18,6 @@ export interface ChatMessage {
   };
 }
 
-interface SessionData {
-  createdAt: string | number | Date;
-  updatedAt: string | number | Date;
-  messages: ChatMessage[];
-  // Add other properties if they exist
-}
-
 export interface ChatSession {
   sessionId: string;
   messages: ChatMessage[];
