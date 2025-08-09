@@ -66,11 +66,11 @@ const playlists = [
     ],
   },
   {
-    id: "anxiety-relief",
-    title: "Anxiety Relief",
-    description: "Soothing sounds to calm anxious thoughts.",
+    id: "anger-peace",
+    title: "Peace from Anger",
+    description: "Soothing sounds to calm rageing thoughts.",
     thumbnail: "/music/thumbnails/04.png",
-    emotionTags: ["anxious", "stressed"],
+    emotionTags: ["anxious", "rage"],
     tracks: [
       {
         id: "5",
