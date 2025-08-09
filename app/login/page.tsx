@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-//import { loginUser } from "@/lib/api/auth";
-//import { useSession } from "@/lib/contexts/session-context";
+import { loginUser } from "@/lib/api/auth";
+import { useSession } from "@/lib/contexts/session-context";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -13,38 +13,38 @@ import { Lock, Mail } from "lucide-react";
 
 const LoginPage = () => {
   const router = useRouter();
-  /*  const { checkSession } = useSession(); */
+  const { checkSession } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  /* const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault();
-      setLoading(true);
-      setError("");
-      try {
-        const response = await loginUser(email, password);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    try {
+      const response = await loginUser(email, password);
 
-        // Store the token in localStorage
-        localStorage.setItem("token", response.token);
+      // Store the token in localStorage
+      localStorage.setItem("token", response.token);
 
-        // Update session state
-        await checkSession();
+      // Update session state
+      await checkSession();
 
-        // Wait for state to update before redirecting
-        await new Promise((resolve) => setTimeout(resolve, 100));
-        router.push("/dashboard");
-      } catch (err) {
-        setError(
-          err instanceof Error
-            ? err.message
-            : "Invalid email or password. Please try again."
-        );
-      } finally {
-        setLoading(false);
-      }
-    }; */
+      // Wait for state to update before redirecting
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      router.push("/dashboard");
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Invalid email or password. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-secondary/30">
@@ -58,7 +58,7 @@ const LoginPage = () => {
               Welcome back! Please sign in to continue your journey.
             </p>
           </div>
-          <form className="space-y-6" /* onSubmit={handleSubmit} */>
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-3">
               <div>
                 <label
@@ -73,7 +73,7 @@ const LoginPage = () => {
                     id="email"
                     type="email"
                     placeholder="Enter your email"
-                    className="pl-12 py-2 text-base rounded-xl bg-card bg-opacity-80 border border-primary focus:outline-none focus:ring-2 focus:ring-primary text-white placeholder:text-muted-foreground"
+                    className="pl-12 py-2 text-base rounded-xl bg-card bg-opacity-80 border border-primary focus:outline-none focus:ring-2 focus:ring-primary text-foreground placeholder:text-muted-foreground"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -93,7 +93,7 @@ const LoginPage = () => {
                     id="password"
                     type="password"
                     placeholder="Enter your password"
-                    className="pl-12 py-2 text-base rounded-xl bg-card bg-opacity-80 border border-primary focus:outline-none focus:ring-2 focus:ring-primary text-white placeholder:text-muted-foreground"
+                    className="pl-12 py-2 text-base rounded-xl bg-card bg-opacity-80 border border-primary focus:outline-none focus:ring-2 focus:ring-primary text-foreground placeholder:text-muted-foreground"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required

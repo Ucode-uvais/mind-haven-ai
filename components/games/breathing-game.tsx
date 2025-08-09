@@ -6,7 +6,14 @@ import { Wind, Check } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 
-const TOTAL_ROUNDS = 5;
+const TOTAL_ROUNDS = 3;
+
+// Define how long each phase lasts in milliseconds
+const PHASE_DURATIONS = {
+  inhale: 4000,
+  hold: 2000,
+  exhale: 4000,
+};
 
 export function BreathingGame() {
   const [phase, setPhase] = useState<"inhale" | "hold" | "exhale">("inhale");
@@ -15,50 +22,44 @@ export function BreathingGame() {
   const [isComplete, setIsComplete] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
 
+  // --- Effect 1: Handles the Progress Bar Timer ---
+  // This effect is only responsible for advancing the progress bar.
   useEffect(() => {
     if (isComplete || isPaused) return;
 
-    let timer: NodeJS.Timeout;
+    const duration = PHASE_DURATIONS[phase];
+    // We calculate the increment needed to fill the bar in the correct duration.
+    // Interval runs every 50ms.
+    const increment = (100 * 50) / duration;
 
-    if (phase === "inhale") {
-      timer = setInterval(() => {
-        setProgress((p) => {
-          if (p >= 100) {
-            setPhase("hold");
-            return 0;
-          }
-          return p + 2;
-        });
-      }, 100);
-    } else if (phase === "hold") {
-      timer = setInterval(() => {
-        setProgress((p) => {
-          if (p >= 100) {
-            setPhase("exhale");
-            return 0;
-          }
-          return p + 4;
-        });
-      }, 100);
-    } else {
-      timer = setInterval(() => {
-        setProgress((p) => {
-          if (p >= 100) {
-            if (round >= TOTAL_ROUNDS) {
-              setIsComplete(true);
-              return p;
-            }
-            setPhase("inhale");
-            setRound((r) => r + 1);
-            return 0;
-          }
-          return p + 2;
-        });
-      }, 100);
-    }
+    const timer = setInterval(() => {
+      setProgress((p) => Math.min(p + increment, 100));
+    }, 50);
 
     return () => clearInterval(timer);
-  }, [phase, round, isComplete, isPaused]);
+  }, [phase, isComplete, isPaused]); // Re-runs only when the phase or paused state changes.
+
+  // --- Effect 2: Handles the Game's State Logic ---
+  // This effect only watches the progress and changes the phase/round when it's full.
+  useEffect(() => {
+    if (progress < 100 || isPaused || isComplete) return;
+
+    // When progress is full, reset it and decide what to do next.
+    setProgress(0);
+
+    if (phase === "inhale") {
+      setPhase("hold");
+    } else if (phase === "hold") {
+      setPhase("exhale");
+    } else if (phase === "exhale") {
+      if (round >= TOTAL_ROUNDS) {
+        setIsComplete(true);
+      } else {
+        setRound((r) => r + 1); // This will now only run ONCE per cycle.
+        setPhase("inhale");
+      }
+    }
+  }, [progress, phase, round, isPaused, isComplete]);
 
   const handleReset = () => {
     setPhase("inhale");

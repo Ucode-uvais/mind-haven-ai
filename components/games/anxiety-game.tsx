@@ -16,6 +16,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { BreathingGame } from "./breathing-game";
 import { ZenGarden } from "./zen-garden";
@@ -155,7 +156,7 @@ export const AnxietyGames = ({ onGamePlayed }: AnxietyGamesProps) => {
 
           {selectedGame && (
             <div className="mt-6 text-center">
-              <Button className="gap-2" onClick={() => setSelectedGame(null)}>
+              <Button className="gap-2" onClick={() => setShowGame(true)}>
                 <Gamepad2 className="h-4 w-4" />
                 Start {games.find((g) => g.id === selectedGame)?.title}
               </Button>
@@ -170,6 +171,10 @@ export const AnxietyGames = ({ onGamePlayed }: AnxietyGamesProps) => {
             <DialogTitle>
               {games.find((g) => g.id === selectedGame)?.title}
             </DialogTitle>
+
+            <DialogDescription>
+              {games.find((g) => g.id === selectedGame)?.description}
+            </DialogDescription>
           </DialogHeader>
           {renderGame()}
         </DialogContent>

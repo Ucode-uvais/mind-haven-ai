@@ -14,6 +14,9 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { useSession } from "@/lib/contexts/session-context";
+import { useRouter } from "next/navigation";
+
 export default function Home() {
   const emotions = [
     { value: 0, label: "😓 Distressed", color: "from-red-500/50" },
@@ -30,7 +33,6 @@ export default function Home() {
       color: "from-rose-500/20",
       delay: 0.2,
     },
-
     {
       icon: Lightbulb,
       title: "Smart Insights",
@@ -56,10 +58,20 @@ export default function Home() {
 
   const [emotion, setEmotion] = useState(50);
   const [mounted, setMounted] = useState(false);
+  const { isAuthenticated } = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const handleBegin = () => {
+    if (isAuthenticated) {
+      router.push("/dashboard");
+    } else {
+      router.push("/signup");
+    }
+  };
 
   const currentEmotion =
     emotions.find((em) => Math.abs(emotion - em.value) < 15) || emotions[2];
@@ -69,7 +81,7 @@ export default function Home() {
       <section className="relative min-h-[90vh] mt-20 flex flex-col items-center justify-center py-12 px-4">
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div
-            className={`absolute w-[500px] h-[500px] rounded-full blur-3xl top-0 -left-20 transition-all duration-700 ease-in-out bg-gradient-to-r ${currentEmotion.color} to-transparent opacity-60`}
+            className={`absolute w-[500px] h-[500px] rounded-full blur-3xl top-0 -left-20 transition-all duration-700 ease-in-out bg-gradient-to-r ${currentEmotion.color} to-transparent opacity-40 dark:opacity-60`}
           />
           <div className="absolute w-[400px] h-[400px] rounded-full bg-secondary/10 blur-3xl bottom-0 right-0 animate-pulse delay-700" />
           <div className="absolute inset-0  bg-background/80 backdrop-blur-3xl" />
@@ -88,7 +100,7 @@ export default function Home() {
             </span>
           </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-plus-jakarta tracking-tight">
-            <span className="inline-block bg-gradient-to-r from-primary via-primary/90 to-secondary bg-clip-text text-transparent [text-shadow:_0_1px_0_rgb(0_0_0_/_20%)] hover:to-primary transition-all duration-300">
+            <span className="inline-block bg-gradient-to-r from-emerald-600 via-primary to-secondary bg-clip-text text-transparent [text-shadow:_0_1px_0_rgb(0_0_0_/_20%)] hover:to-primary transition-all duration-300 dark:from-primary dark:via-primary/90 dark:to-secondary hover:dark:to-primary">
               Feel Heard
             </span>
             <br />
@@ -166,7 +178,7 @@ export default function Home() {
           >
             <Button
               size="lg"
-              /* onClick={() => setShowDialog(true)} */
+              onClick={handleBegin}
               className="relative group h-12 px-8 rounded-full bg-gradient-to-r from-primary via-primary/90 to-secondary hover:to-primary shadow-lg shadow-primary/20 transition-all duration-500 hover:shadow-xl hover:shadow-primary/30"
             >
               <span className="relative z-10 font-medium flex items-center gap-2">
@@ -178,7 +190,6 @@ export default function Home() {
           </motion.div>
         </motion.div>
       </section>
-
       {/*Features*/}
       <section className="relative py-20 px-4 overflow-hidden">
         <div className="max-w-6xl mx-auto">

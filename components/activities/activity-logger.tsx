@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Plus, X, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -20,6 +19,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { toast } from "sonner";
+import { useSession } from "@/lib/contexts/session-context";
+import { logActivity } from "@/lib/api/activity";
 
 const activityTypes = [
   { id: "meditation", name: "Meditation" },
@@ -30,32 +32,86 @@ const activityTypes = [
   { id: "therapy", name: "Therapy Session" },
 ];
 
+const difficultyTypes = [
+  { id: "easy", name: "Easy" },
+  { id: "normal", name: "Normal" },
+  { id: "hard", name: "Hard" },
+];
+
 interface ActivityLoggerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onActivityLogged: () => void;
 }
 
-export const ActivityLogger = ({ open, onOpenChange }: ActivityLoggerProps) => {
+export const ActivityLogger = ({
+  open,
+  onOpenChange,
+  onActivityLogged,
+}: ActivityLoggerProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [type, setType] = useState("");
   const [name, setName] = useState("");
   const [duration, setDuration] = useState("");
   const [description, setDescription] = useState("");
+  const [difficulty, setDifficulty] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    setTimeout(() => {
-      console.log({ type, name, duration, description });
+  const { isAuthenticated, loading } = useSession();
 
-      //Reset fields
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isAuthenticated) {
+      toast.error("Authentication required", {
+        description: "Please log in to log activities",
+      });
+      return;
+    }
+
+    if (!type || !name || !difficulty) {
+      toast.error("Missing information", {
+        description: "Please fill in all required fields",
+      });
+      return;
+    }
+    if (duration && parseFloat(duration) < 0) {
+      toast.error("Invalid duration", {
+        description: "Duration must be a positive number",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await logActivity({
+        type,
+        name,
+        description,
+        duration: duration ? parseInt(duration) : undefined,
+        difficulty,
+      });
+
+      // Reset form
       setType("");
       setName("");
       setDuration("");
       setDescription("");
-      setIsLoading(false);
+      setDifficulty("");
 
-      alert("Activity Logged!!!");
+      toast.success("Activity logged successfully!", {
+        description: "Your activity has been recorded.",
+      });
+
+      onActivityLogged();
       onOpenChange(false);
-    }, 1000);
+    } catch (error) {
+      console.error("Error logging activity:", error);
+      toast.error("Error", {
+        description:
+          error instanceof Error ? error.message : "Failed to log activity",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -97,8 +153,15 @@ export const ActivityLogger = ({ open, onOpenChange }: ActivityLoggerProps) => {
             <Input
               type="number"
               value={duration}
-              onChange={(e) => setDuration(e.target.value)}
+              onChange={(e) => {
+                // Allow empty string or positive numbers
+                const value = e.target.value;
+                if (value === "" || parseFloat(value) >= 0) {
+                  setDuration(value);
+                }
+              }}
               placeholder="15"
+              min="0"
             />
           </div>
 
@@ -111,6 +174,22 @@ export const ActivityLogger = ({ open, onOpenChange }: ActivityLoggerProps) => {
             />
           </div>
 
+          <div className="space-y-2">
+            <Label>Difficulty</Label>
+            <Select value={difficulty} onValueChange={setDifficulty}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select difficulty" />
+              </SelectTrigger>
+              <SelectContent>
+                {difficultyTypes.map((type) => (
+                  <SelectItem key={type.id} value={type.id}>
+                    {type.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
           <div className="flex justify-end gap-2">
             <Button
               type="button"
@@ -119,7 +198,18 @@ export const ActivityLogger = ({ open, onOpenChange }: ActivityLoggerProps) => {
             >
               Cancel
             </Button>
-            <Button type="submit">Save Activity</Button>
+            <Button type="submit" disabled={isLoading || loading}>
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Saving...
+                </>
+              ) : loading ? (
+                "Loading..."
+              ) : (
+                "Save Activity"
+              )}
+            </Button>
           </div>
         </form>
       </DialogContent>

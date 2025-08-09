@@ -4,6 +4,9 @@ import "./globals.css";
 import { Header } from "@/components/header";
 import { Providers } from "@/components/providers";
 import { Footer } from "@/components/footer";
+import { Toaster } from "@/components/ui/sonner";
+import CursorTrail from "@/components/magicui/cursor-trail";
+import AnimatedBackground from "@/components/magicui/animated-background";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,15 +29,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
+          <AnimatedBackground />
+          <CursorTrail />
           <Header />
 
-          {children}
+          <main>{children}</main>
           <Footer />
+          <Toaster />
         </Providers>
       </body>
     </html>

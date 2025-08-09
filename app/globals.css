@@ -44,44 +44,42 @@
 }
 
 :root {
-  /* Calming light theme colors */
-  --background: #f7faf9;
-  --foreground: #2e3537;
+  /* A softer, calmer light theme */
+  --background: #f8f7f4; /* Softer, slightly warm off-white */
+  --foreground: #333a45; /* Softer, deep slate for text */
 
-  --card: #f7faf9;
-  --card-foreground: #2e3537;
+  --card: #ffffff; /* Clean white cards for subtle contrast */
+  --card-foreground: #333a45;
 
-  --popover: #f7faf9;
-  --popover-foreground: #2e3537;
+  --popover: #ffffff;
+  --popover-foreground: #333a45;
 
-  /* Soft sage green as primary */
+  /* Primary color remains consistent with the brand */
   --primary: #9bc9b2;
-  --primary-foreground: #2a3d29;
+  --primary-foreground: #1e2d25; /* Slightly adjusted for clarity */
 
-  /* Gentle lavender as secondary */
-  --secondary: #f3f2fa;
-  --secondary-foreground: #726b8a;
+  /* Muted, neutral tones for secondary elements */
+  --secondary: #f3f4f6; /* Light gray */
+  --secondary-foreground: #4b5563; /* Medium gray text */
 
-  /* Muted tones */
-  --muted: #f3f6fa;
-  --muted-foreground: #6e7c8a;
+  --muted: #e5e7eb; /* Slightly darker gray for muted backgrounds */
+  --muted-foreground: #6b7280; /* Softer text for muted elements */
 
-  /* Soft accent */
-  --accent: #f4f8f6;
-  --accent-foreground: #6e7c8a;
+  --accent: #f0f5f3; /* A very light sage for hover states */
+  --accent-foreground: #333a45;
 
-  --destructive: #f25f5c;
-  --destructive-foreground: #f6fbfa;
+  --destructive: #ef4444; /* A slightly softer red */
+  --destructive-foreground: #f8fafc;
 
-  --border: #e6e9eb;
-  --input: #e6e9eb;
+  --border: #e5e7eb;
+  --input: #e5e7eb;
   --ring: #9bc9b2;
 
   --radius: 0.75rem;
 }
 
 .dark {
-  /* Soothing dark theme colors */
+  /* Soothing dark theme colors (unchanged) */
   --background: #0a1014;
   --foreground: #e8ecf2;
 
