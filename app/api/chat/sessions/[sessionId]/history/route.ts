@@ -6,10 +6,10 @@ const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://localhost:3001";
 
 export const GET = async (
   req: NextRequest,
-  context: { params: { sessionId: string } } // Corrected function signature
+  context: { params: { sessionId: string } }
 ) => {
   try {
-    const { sessionId } = context.params; // Destructure params here
+    const { sessionId } = context.params;
     console.log(`Getting chat history for session ${sessionId}`);
 
     const authHeader = req.headers.get("Authorization");
@@ -37,25 +37,7 @@ export const GET = async (
     const data = await response.json();
     console.log("Chat history retrieved successfully:", data);
 
-    // It's a good practice to ensure data is an array before mapping
-    if (!Array.isArray(data)) {
-      return NextResponse.json({ messages: [] });
-    }
-
-    // Type definition for a single message
-    interface ChatMessage {
-      role: string;
-      content: string;
-      timestamp: string;
-    }
-
-    const formattedMessages = data.map((msg: ChatMessage) => ({
-      role: msg.role,
-      content: msg.content,
-      timestamp: msg.timestamp,
-    }));
-
-    return NextResponse.json(formattedMessages);
+    return NextResponse.json(data);
   } catch (error) {
     console.error("Error getting chat history:", error);
     return NextResponse.json(
