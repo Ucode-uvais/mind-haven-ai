@@ -4,15 +4,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://localhost:3001";
 
-export const GET = async (
+export async function GET(
   req: NextRequest,
-  context: { params: { sessionId: string } }
-) => {
+  { params }: { params: { sessionId: string } }
+) {
   try {
-    const { sessionId } = context.params;
+    const { sessionId } = params;
     console.log(`Getting chat history for session ${sessionId}`);
-
-    const authHeader = req.headers.get("Authorization");
 
     const response = await fetch(
       `${BACKEND_API_URL}/chat/sessions/${sessionId}/history`,
@@ -20,7 +18,6 @@ export const GET = async (
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: authHeader || "",
         },
       }
     );
@@ -37,12 +34,19 @@ export const GET = async (
     const data = await response.json();
     console.log("Chat history retrieved successfully:", data);
 
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error("Error getting chat history:", error);
+    // Format the response to match the frontend's expected format
+    const formattedMessages = data.map((msg: any) => ({
+      role: msg.role,
+      content: msg.content,
+      timestamp: msg.timestamp,
+    }));
+
+    return NextResponse.json(formattedMessages);
+  } catch {
+    console.error("Error getting chat history:");
     return NextResponse.json(
       { error: "Failed to get chat history" },
       { status: 500 }
     );
   }
-};
+}
