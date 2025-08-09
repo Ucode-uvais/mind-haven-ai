@@ -51,7 +51,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
         const data = await response.json();
         console.log("SessionContext: User data received:", data);
         const userData = data.user;
-        const { password, ...safeUserData } = userData;
+        const { ...safeUserData } = userData;
         setUser(safeUserData);
         console.log("SessionContext: User state updated:", safeUserData);
       } else {

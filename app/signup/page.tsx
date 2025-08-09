@@ -30,10 +30,12 @@ const SignupPage = () => {
     try {
       await registerUser(name, email, password);
       router.push("/login");
-    } catch (err: any) {
-      setError(err.message || "Signup failed. Please try again.");
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message || "Signup failed. Please try again.");
+      } else {
+        setError("An unknown error occurred.");
+      }
     }
   };
 

@@ -503,7 +503,7 @@ const DashboardPage = () => {
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
                   <div>
-                    <CardTitle>Today's Overview</CardTitle>
+                    <CardTitle>Today&apos;s Overview</CardTitle>
                     <CardDescription>
                       Your wellness metrics for{" "}
                       {format(new Date(), "MMMM d, yyyy")}

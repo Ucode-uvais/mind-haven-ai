@@ -26,11 +26,11 @@ export function OceanWaves() {
       audio.pause();
       audio.currentTime = 0;
     };
-  }, []);
+  }, [audio, volume]);
 
   useEffect(() => {
     audio.volume = volume / 100;
-  }, [volume]);
+  }, [volume, audio]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;

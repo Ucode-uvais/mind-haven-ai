@@ -34,7 +34,13 @@ export function ForestGame() {
         audio.currentTime = 0;
       });
     };
-  }, []);
+  }, [audioElements, volume]);
+
+  useEffect(() => {
+    Object.values(audioElements).forEach((audio) => {
+      audio.volume = volume / 100;
+    });
+  }, [volume, audioElements]);
 
   useEffect(() => {
     Object.values(audioElements).forEach((audio) => {

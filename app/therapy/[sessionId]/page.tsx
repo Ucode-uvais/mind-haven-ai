@@ -17,7 +17,6 @@ import {
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
-import { Badge } from "@/components/ui/badge";
 import {
   createChatSession,
   sendChatMessage,
@@ -56,7 +55,7 @@ const TYPING_MESSAGES = [
 ];
 
 // Glow animation variant from your reference code
-const glowAnimation = {
+const glowAnimation: any = {
   initial: { opacity: 0.5, scale: 1 },
   animate: {
     opacity: [0.5, 1, 0.5],
@@ -159,7 +158,7 @@ const TherapyPage = () => {
     };
 
     initChat();
-  }, [params.sessionId]);
+  }, [params.sessionId, handleNewSession, router]);
 
   // Load all sessions on initial mount
   useEffect(() => {

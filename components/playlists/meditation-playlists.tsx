@@ -146,7 +146,7 @@ export const MeditationPlaylists = () => {
           Meditation Playlists
         </CardTitle>
         <CardDescription>
-          Music to soothe you when you're feeling down.
+          Music to soothe you when you&apos;re feeling down
         </CardDescription>
       </CardHeader>
       <CardContent>

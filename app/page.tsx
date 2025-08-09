@@ -163,7 +163,7 @@ export default function Home() {
             </div>
             <div className="text-center">
               <p className="text-sm text-muted-foreground animate-pulse">
-                Slide to express how you're feeling today
+                Slide to express how you&apos;re feeling today
               </p>
             </div>
           </motion.div>
