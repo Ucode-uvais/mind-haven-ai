@@ -28,7 +28,6 @@ export function ForestGame() {
     });
 
     return () => {
-      // Cleanup audio on unmount
       Object.values(audioElements).forEach((audio) => {
         audio.pause();
         audio.currentTime = 0;
@@ -41,12 +40,6 @@ export function ForestGame() {
       audio.volume = volume / 100;
     });
   }, [volume, audioElements]);
-
-  useEffect(() => {
-    Object.values(audioElements).forEach((audio) => {
-      audio.volume = volume / 100;
-    });
-  }, [volume]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;

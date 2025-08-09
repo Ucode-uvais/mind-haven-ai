@@ -39,6 +39,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
+import { ApiResponse } from "@/lib/api/chat";
 
 const SUGGESTED_QUESTIONS = [
   { text: "How can I manage my anxiety better?" },
@@ -186,7 +187,10 @@ const TherapyPage = () => {
     setIsTyping(true);
 
     try {
-      const response = await sendChatMessage(sessionId, currentMessage);
+      const response: ApiResponse = await sendChatMessage(
+        sessionId,
+        currentMessage
+      );
       const aiResponse =
         typeof response === "string" ? JSON.parse(response) : response;
       const assistantMessage: ChatMessage = {
@@ -380,7 +384,7 @@ const TherapyPage = () => {
                           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-32 bg-primary/10 blur-3xl rounded-full"
                           initial="initial"
                           animate="animate"
-                          variants={glowAnimation as any}
+                          variants={glowAnimation}
                         />
                         <div className="relative flex items-center gap-2 text-2xl font-semibold">
                           <div className="relative">
@@ -389,7 +393,7 @@ const TherapyPage = () => {
                               className="absolute inset-0 text-primary"
                               initial="initial"
                               animate="animate"
-                              variants={glowAnimation as any}
+                              variants={glowAnimation}
                             >
                               <Sparkles className="w-6 h-6" />
                             </motion.div>
@@ -480,7 +484,7 @@ const TherapyPage = () => {
                 <textarea
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Tell me what's on your mind..."
+                  placeholder="Tell me what is on your mind..."
                   className="w-full resize-none rounded-full border bg-muted p-3 pl-4 pr-14 min-h-[48px] focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-200"
                   rows={1}
                   disabled={isTyping}

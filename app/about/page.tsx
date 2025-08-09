@@ -39,11 +39,11 @@ const AboutPage = () => {
           About MindHaven2.0
         </h1>
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          We&apos;re reimagining mental health support—blending the compassion
-          of therapy with the power of cutting-edge AI and the security of
-          blockchain. At Mind Haven, we&apos;re committed to creating a
+          &quot;We&apos;re reimagining mental health support—blending the
+          compassion of therapy with the power of cutting-edge AI and the
+          security of blockchain. At Mind Haven, we commit to creating a
           sanctuary where users feel seen, heard, and supported—anytime,
-          anywhere.
+          anywhere.&quot;
         </p>
       </motion.div>
 

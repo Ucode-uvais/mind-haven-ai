@@ -20,7 +20,7 @@ interface MoodStats {
 
 export async function trackMood(
   data: MoodEntry
-): Promise<{ success: boolean; data: any }> {
+): Promise<{ success: boolean; data: MoodStats }> {
   const token = localStorage.getItem("token");
   if (!token) throw new Error("Not authenticated");
 
@@ -67,7 +67,7 @@ export async function getMoodHistory(params?: {
   startDate?: string;
   endDate?: string;
   limit?: number;
-}): Promise<{ success: boolean; data: any[] }> {
+}): Promise<{ success: boolean; data: MoodStats[] }> {
   const token = localStorage.getItem("token");
   if (!token) throw new Error("Not authenticated");
 

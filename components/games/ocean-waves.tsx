@@ -58,7 +58,7 @@ export function OceanWaves() {
     }
 
     return () => clearInterval(timer);
-  }, [isPlaying, timeLeft]);
+  }, [isPlaying, timeLeft, waveControls]);
 
   const togglePlay = () => {
     if (isPlaying) {

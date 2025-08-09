@@ -18,6 +18,13 @@ export interface ChatMessage {
   };
 }
 
+interface SessionData {
+  createdAt: string | number | Date;
+  updatedAt: string | number | Date;
+  messages: ChatMessage[];
+  // Add other properties if they exist
+}
+
 export interface ChatSession {
   sessionId: string;
   messages: ChatMessage[];
@@ -133,7 +140,7 @@ export const getChatHistory = async (
     }
 
     // Ensure each message has the correct format
-    return data.map((msg: any) => ({
+    return data.map((msg: ChatMessage) => ({
       role: msg.role,
       content: msg.content,
       timestamp: new Date(msg.timestamp),
@@ -161,7 +168,7 @@ export const getAllChatSessions = async (): Promise<ChatSession[]> => {
     const data = await response.json();
     console.log("Received chat sessions:", data);
 
-    return data.map((session: any) => {
+    return data.map((session: ChatSession) => {
       // Ensure dates are valid
       const createdAt = new Date(session.createdAt || Date.now());
       const updatedAt = new Date(session.updatedAt || Date.now());
@@ -170,7 +177,7 @@ export const getAllChatSessions = async (): Promise<ChatSession[]> => {
         ...session,
         createdAt: isNaN(createdAt.getTime()) ? new Date() : createdAt,
         updatedAt: isNaN(updatedAt.getTime()) ? new Date() : updatedAt,
-        messages: (session.messages || []).map((msg: any) => ({
+        messages: (session.messages || []).map((msg: ChatMessage) => ({
           ...msg,
           timestamp: new Date(msg.timestamp || Date.now()),
         })),
