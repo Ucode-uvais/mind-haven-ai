@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,7 +15,7 @@ import {
   PanelLeftOpen,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import {
   createChatSession,
@@ -54,8 +54,7 @@ const TYPING_MESSAGES = [
   "Thinking...",
 ];
 
-// Glow animation variant from your reference code
-const glowAnimation: any = {
+const glowAnimation: Variants = {
   initial: { opacity: 0.5, scale: 1 },
   animate: {
     opacity: [0.5, 1, 0.5],
@@ -105,11 +104,11 @@ const TherapyPage = () => {
     }
   };
 
-  const handleNewSession = async () => {
+  const handleNewSession = useCallback(async () => {
     try {
       setIsLoading(true);
       const newSessionId = await createChatSession();
-      await loadSessions(); // Refresh the list
+      await loadSessions();
       router.push(`/therapy/${newSessionId}`);
     } catch (error) {
       console.error("Failed to create new session:", error);
@@ -117,7 +116,7 @@ const TherapyPage = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [router]);
 
   // Initialize chat session and load history
   useEffect(() => {
