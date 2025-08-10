@@ -6,10 +6,10 @@ const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://localhost:3001";
 
 export async function POST(
   req: NextRequest,
-  context: { params: { sessionId: string } }
+  { params }: { params: { sessionId: string } }
 ) {
   try {
-    const { sessionId } = context.params; // Destructure sessionId here
+    const { sessionId } = params;
     const body = await req.json();
     const { message } = body;
 
@@ -35,19 +35,15 @@ export async function POST(
     if (!response.ok) {
       const error = await response.json();
       console.error("Failed to send message:", error);
-      return NextResponse.json(
-        { error: error.error || "Failed to send message" },
-        { status: response.status }
-      );
+      return NextResponse.json(error, { status: response.status });
     }
 
     const data = await response.json();
-    console.log("Message sent successfully:", data);
     return NextResponse.json(data);
   } catch (error) {
     console.error("Error sending message:", error);
     return NextResponse.json(
-      { error: "Failed to send message" },
+      { error: "Internal server error" },
       { status: 500 }
     );
   }
