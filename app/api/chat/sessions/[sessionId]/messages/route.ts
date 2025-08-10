@@ -1,15 +1,15 @@
-// messages/route.ts
+// app/api/chat/sessions/[sessionId]/messages/route.ts
 
 import { NextRequest, NextResponse } from "next/server";
 
-const BACKEND_API_URL = "https://mind-haven-ai.onrender.com";
+const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://localhost:3001";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { sessionId: string } }
+  context: { params: { sessionId: string } }
 ) {
   try {
-    const { sessionId } = params;
+    const { sessionId } = context.params; // Destructure sessionId here
     const body = await req.json();
     const { message } = body;
 

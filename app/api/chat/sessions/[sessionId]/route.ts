@@ -6,10 +6,10 @@ const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://localhost:3001";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { sessionId: string } }
+  context: { params: { sessionId: string } }
 ) {
   try {
-    const { sessionId } = params;
+    const { sessionId } = context.params;
     const response = await fetch(
       `${BACKEND_API_URL}/chat/sessions/${sessionId}/history`
     );
@@ -31,10 +31,10 @@ export async function GET(
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { sessionId: string } }
+  context: { params: { sessionId: string } }
 ) {
   try {
-    const { sessionId } = params;
+    const { sessionId } = context.params;
     const { message } = await req.json();
 
     if (!message) {
@@ -72,10 +72,10 @@ export async function POST(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { sessionId: string } }
+  context: { params: { sessionId: string } }
 ) {
   try {
-    const { sessionId } = params;
+    const { sessionId } = context.params;
     const authHeader = req.headers.get("Authorization");
 
     if (!authHeader) {
