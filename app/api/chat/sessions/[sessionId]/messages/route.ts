@@ -1,15 +1,16 @@
-// app/api/chat/sessions/[sessionId]/messages/route.ts
-
 import { NextRequest, NextResponse } from "next/server";
+
+interface RouteParams {
+  params: {
+    sessionId: string;
+  };
+}
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://localhost:3001";
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: { sessionId: string } }
-) {
+export async function POST(req: NextRequest, context: RouteParams) {
   try {
-    const { sessionId } = params;
+    const { sessionId } = context.params;
     const body = await req.json();
     const { message } = body;
 
