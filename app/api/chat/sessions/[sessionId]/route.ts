@@ -1,16 +1,16 @@
+// app/api/chat/sessions/[sessionId]/route.ts
 import { NextRequest, NextResponse } from "next/server";
-
-interface RouteParams {
-  params: {
-    sessionId: string;
-  };
-}
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://localhost:3001";
 
-export async function GET(req: NextRequest, context: RouteParams) {
+type ParamsPromise = Promise<{ sessionId: string }>;
+
+export async function GET(
+  req: NextRequest,
+  { params }: { params: ParamsPromise }
+) {
   try {
-    const { sessionId } = context.params;
+    const { sessionId } = await params;
 
     const response = await fetch(
       `${BACKEND_API_URL}/chat/sessions/${sessionId}`
@@ -22,7 +22,8 @@ export async function GET(req: NextRequest, context: RouteParams) {
 
     const data = await response.json();
     return NextResponse.json(data);
-  } catch (error) {
+  } catch (err) {
+    console.error(err);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
@@ -30,9 +31,12 @@ export async function GET(req: NextRequest, context: RouteParams) {
   }
 }
 
-export async function DELETE(req: NextRequest, context: RouteParams) {
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: ParamsPromise }
+) {
   try {
-    const { sessionId } = context.params;
+    const { sessionId } = await params;
 
     const response = await fetch(
       `${BACKEND_API_URL}/chat/sessions/${sessionId}`,
@@ -47,7 +51,8 @@ export async function DELETE(req: NextRequest, context: RouteParams) {
     }
 
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch (err) {
+    console.error(err);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
