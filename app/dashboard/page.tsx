@@ -299,6 +299,17 @@ const DashboardPage = () => {
   }, [activities, mounted, latestMood]);
 
   useEffect(() => {
+    const lastMoodJSON = localStorage.getItem("lastMood");
+    if (lastMoodJSON) {
+      const lastMood = JSON.parse(lastMoodJSON);
+      const todayKey = new Date().toISOString().slice(0, 10);
+      if (lastMood.date === todayKey && lastMood.score !== undefined) {
+        setLatestMood(lastMood.score);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     loadActivities();
   }, [loadActivities]);
 

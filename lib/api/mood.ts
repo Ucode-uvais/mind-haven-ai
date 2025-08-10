@@ -89,26 +89,3 @@ export async function getMoodHistory(params?: {
 
   return response.json();
 }
-
-export async function getMoodStats(
-  period: "week" | "month" | "year" = "week"
-): Promise<{
-  success: boolean;
-  data: MoodStats;
-}> {
-  const token = localStorage.getItem("token");
-  if (!token) throw new Error("Not authenticated");
-
-  const response = await fetch(`/api/mood/stats?period=${period}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || "Failed to fetch mood statistics");
-  }
-
-  return response.json();
-}
