@@ -1,12 +1,8 @@
-import {
-  Request,
-  Response,
-  NextFunction,
-} from "express"; /*next() is a fn we call to pass the control to the next middleware or route handler*/
+import { Request, Response, NextFunction } from "express";
 import { User } from "../models/User";
 import jwt from "jsonwebtoken";
-
-// Extend Express Request interface to include a user property
+import dotenv from "dotenv";
+dotenv.config();
 
 declare global {
   namespace Express {
@@ -19,24 +15,25 @@ declare global {
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.header("Authorization")?.replace("Bearer ", "");
-
     if (!token) {
       return res.status(401).json({ message: "Authentication required" });
     }
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET || "your-secret-key"
-    ) as any;
 
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      throw new Error("JWT_SECRET is not configured");
+    }
+
+    const decoded = jwt.verify(token, secret) as { userId: string };
     const user = await User.findById(decoded.userId);
 
     if (!user) {
-      return res.status(401).json({ message: "User Not Found" });
+      return res.status(401).json({ message: "User not found" });
     }
 
     req.user = user;
     next();
-  } catch (error) {
-    res.status(401).json({ message: "Invalid Authentication Token", error });
+  } catch {
+    res.status(401).json({ message: "Invalid Authentication Token" });
   }
 };
