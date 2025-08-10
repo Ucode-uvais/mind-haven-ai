@@ -1,7 +1,8 @@
 // app/api/chat/sessions/[sessionId]/route.ts
 import { NextRequest, NextResponse } from "next/server";
 
-const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://localhost:3001";
+const BACKEND_API_URL =
+  process.env.BACKEND_API_URL || "https://mind-haven-ai.onrender.com";
 
 type ParamsPromise = Promise<{ sessionId: string }>;
 

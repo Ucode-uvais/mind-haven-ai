@@ -4,7 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
-  const API_URL = process.env.BACKEND_API_URL || "http://localhost:3001";
+  const API_URL =
+    process.env.BACKEND_API_URL || "https://mind-haven-ai.onrender.com";
 
   try {
     const res = await fetch(`${API_URL}/auth/register`, {

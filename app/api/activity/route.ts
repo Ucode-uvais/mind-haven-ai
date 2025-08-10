@@ -2,7 +2,8 @@
 
 import { NextRequest, NextResponse } from "next/server";
 
-const API_URL = process.env.BACKEND_API_URL || "http://localhost:3001";
+const API_URL =
+  process.env.BACKEND_API_URL || "https://mind-haven-ai.onrender.com";
 
 export async function GET(req: NextRequest) {
   const token = req.headers.get("Authorization");
