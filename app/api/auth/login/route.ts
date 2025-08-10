@@ -4,11 +4,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
-  const API_URL =
-    process.env.BACKEND_API_URL || "https://mind-haven-ai.onrender.com";
+  const API_BASE =
+    process.env.NODE_ENV === "production" ? "" : "http://localhost:3001";
 
   try {
-    const res = await fetch(`${API_URL}/auth/login`, {
+    const res = await fetch(`${API_BASE}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),

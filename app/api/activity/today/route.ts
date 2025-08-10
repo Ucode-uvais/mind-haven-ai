@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const API_URL =
-  process.env.BACKEND_API_URL || "https://mind-haven-ai.onrender.com";
+const API_BASE =
+  process.env.NODE_ENV === "production" ? "" : "http://localhost:3001";
 
 // Handler for GET /api/activities/today
 export async function GET(req: NextRequest) {
   const token = req.headers.get("Authorization");
 
   try {
-    const backendResponse = await fetch(`${API_URL}/api/activity/today`, {
+    const backendResponse = await fetch(`${API_BASE}/api/activity/today`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

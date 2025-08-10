@@ -48,7 +48,7 @@ export interface ApiResponse {
 }
 
 const API_BASE =
-  process.env.BACKEND_API_URL || "https://mind-haven-ai.onrender.com";
+  process.env.NODE_ENV === "production" ? "" : "http://localhost:3001";
 
 // Helper function to get auth headers
 const getAuthHeaders = () => {
