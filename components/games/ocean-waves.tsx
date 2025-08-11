@@ -26,11 +26,11 @@ export function OceanWaves() {
       audio.pause();
       audio.currentTime = 0;
     };
-  }, [audio, volume]);
+  }, []);
 
   useEffect(() => {
     audio.volume = volume / 100;
-  }, [volume, audio]);
+  }, [volume]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -58,7 +58,7 @@ export function OceanWaves() {
     }
 
     return () => clearInterval(timer);
-  }, [isPlaying, timeLeft, waveControls]);
+  }, [isPlaying, timeLeft]);
 
   const togglePlay = () => {
     if (isPlaying) {

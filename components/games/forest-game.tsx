@@ -28,18 +28,19 @@ export function ForestGame() {
     });
 
     return () => {
+      // Cleanup audio on unmount
       Object.values(audioElements).forEach((audio) => {
         audio.pause();
         audio.currentTime = 0;
       });
     };
-  }, [audioElements, volume]);
+  }, []);
 
   useEffect(() => {
     Object.values(audioElements).forEach((audio) => {
       audio.volume = volume / 100;
     });
-  }, [volume, audioElements]);
+  }, [volume]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
