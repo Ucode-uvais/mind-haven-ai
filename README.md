@@ -150,7 +150,7 @@ Distributed under the MIT License. See LICENSE for details.
 ## **📬 Contact**
 Maintainer: Seyyed Uvais
 📧 Email: seyyeduvais@gmail.com
-🌐 Website: https://seyyeduvais.vercel.com
+🌐 Website: [Seyd's Portfolio](https://seyyeduvais.vercel.app/)
 
 
 
