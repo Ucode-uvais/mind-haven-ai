@@ -1,5 +1,4 @@
-const express = require("express");
-
+import express from "express";
 import { Request, Response } from "express";
 import { serve } from "inngest/express";
 import { inngest } from "./inngest/index";
@@ -24,10 +23,10 @@ const app = express();
 //middleware
 app.use(cors());
 app.use(helmet());
+app.use(express.json());
 app.use(morgan("dev"));
 
 //Parse JSON body
-app.use(express.json());
 
 // Set up the "/api/inngest" (recommended) routes with the serve handler
 app.use(
