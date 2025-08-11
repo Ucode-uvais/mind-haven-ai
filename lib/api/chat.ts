@@ -47,8 +47,8 @@ export interface ApiResponse {
   };
 }
 
-const API_BASE =
-  process.env.NODE_ENV === "production" ? "" : "http://localhost:3001";
+const API_URL =
+  process.env.BACKEND_API_URL || "https://mind-haven-ai.onrender.com";
 
 // Helper function to get auth headers
 const getAuthHeaders = () => {
@@ -62,7 +62,7 @@ const getAuthHeaders = () => {
 export const createChatSession = async (): Promise<string> => {
   try {
     console.log("Creating new chat session...");
-    const response = await fetch(`${API_BASE}/chat/sessions`, {
+    const response = await fetch(`${API_URL}/chat/sessions`, {
       method: "POST",
       headers: getAuthHeaders(),
     });
@@ -89,7 +89,7 @@ export const sendChatMessage = async (
   try {
     console.log(`Sending message to session ${sessionId}:`, message);
     const response = await fetch(
-      `${API_BASE}/chat/sessions/${sessionId}/messages`,
+      `${API_URL}/chat/sessions/${sessionId}/messages`,
       {
         method: "POST",
         headers: getAuthHeaders(),
@@ -118,7 +118,7 @@ export const getChatHistory = async (
   try {
     console.log(`Fetching chat history for session ${sessionId}`);
     const response = await fetch(
-      `${API_BASE}/chat/sessions/${sessionId}/history`,
+      `${API_URL}/chat/sessions/${sessionId}/history`,
       {
         headers: getAuthHeaders(),
       }
@@ -154,7 +154,7 @@ export const getChatHistory = async (
 export const getAllChatSessions = async (): Promise<ChatSession[]> => {
   try {
     console.log("Fetching all chat sessions...");
-    const response = await fetch(`${API_BASE}/chat/sessions`, {
+    const response = await fetch(`${API_URL}/chat/sessions`, {
       headers: getAuthHeaders(),
     });
 
@@ -191,7 +191,7 @@ export const getAllChatSessions = async (): Promise<ChatSession[]> => {
 export const deleteChatSession = async (sessionId: string): Promise<void> => {
   try {
     console.log(`Deleting chat session ${sessionId}...`);
-    const response = await fetch(`${API_BASE}/chat/sessions/${sessionId}`, {
+    const response = await fetch(`${API_URL}/chat/sessions/${sessionId}`, {
       method: "DELETE",
       headers: getAuthHeaders(),
     });

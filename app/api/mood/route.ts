@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const API_BASE =
-    process.env.NODE_ENV === "production" ? "" : "http://localhost:3001";
+  const API_URL =
+    process.env.BACKEND_API_URL || "https://mind-haven-ai.onrender.com";
   const token = req.headers.get("Authorization");
 
   if (!token) {
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Forward the entire body to the backend
-    const response = await fetch(`${API_BASE}/api/mood`, {
+    const response = await fetch(`${API_URL}/api/mood`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -2,14 +2,14 @@
 
 import { NextRequest, NextResponse } from "next/server";
 
-const API_BASE =
-  process.env.NODE_ENV === "production" ? "" : "http://localhost:3001";
+const API_URL =
+  process.env.BACKEND_API_URL || "https://mind-haven-ai.onrender.com";
 
 export async function GET(req: NextRequest) {
   const token = req.headers.get("Authorization");
 
   try {
-    const backendResponse = await fetch(`${API_BASE}/api/activity`, {
+    const backendResponse = await fetch(`${API_URL}/api/activity`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
 
   try {
-    const backendResponse = await fetch(`${API_BASE}/api/activity`, {
+    const backendResponse = await fetch(`${API_URL}/api/activity`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,8 +1,8 @@
 // app/api/chat/sessions/route.ts
 import { NextRequest, NextResponse } from "next/server";
 
-const API_BASE =
-  process.env.NODE_ENV === "production" ? "" : "http://localhost:3001";
+const API_URL =
+  process.env.BACKEND_API_URL || "https://mind-haven-ai.onrender.com";
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Title is required" }, { status: 400 });
     }
 
-    const response = await fetch(`${API_BASE}/chat/sessions`, {
+    const response = await fetch(`${API_URL}/chat/sessions`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title }),

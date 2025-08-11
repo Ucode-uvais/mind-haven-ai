@@ -3,8 +3,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const API_BASE =
-    process.env.NODE_ENV === "production" ? "" : "http://localhost:3001";
+  const API_URL =
+    process.env.BACKEND_API_URL || "https://mind-haven-ai.onrender.com";
   const token = req.headers.get("Authorization");
 
   if (!token) {
@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const res = await fetch(`${API_BASE}/auth/me`, {
+    const res = await fetch(`${API_URL}/auth/me`, {
       headers: {
         Authorization: token,
       },

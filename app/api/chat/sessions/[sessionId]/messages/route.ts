@@ -1,8 +1,8 @@
 // app/api/chat/sessions/[sessionId]/messages/route.ts
 import { NextRequest, NextResponse } from "next/server";
 
-const API_BASE =
-  process.env.NODE_ENV === "production" ? "" : "http://localhost:3001";
+const API_URL =
+  process.env.BACKEND_API_URL || "https://mind-haven-ai.onrender.com";
 
 type ParamsPromise = Promise<{ sessionId: string }>;
 
@@ -23,7 +23,7 @@ export async function POST(
     }
 
     const response = await fetch(
-      `${API_BASE}/chat/sessions/${sessionId}/messages`,
+      `${API_URL}/chat/sessions/${sessionId}/messages`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
