@@ -59,9 +59,11 @@ export const FloatingMusicPlayer = () => {
   };
 
   const handleSeek = (value: number[]) => {
-    if (audioRef.current) {
-      audioRef.current.currentTime =
-        (value[0] / 100) * audioRef.current.duration;
+    if (audioRef.current && audioRef.current.duration) {
+      const newTime = (value[0] / 100) * audioRef.current.duration;
+      if (isFinite(newTime)) {
+        audioRef.current.currentTime = newTime;
+      }
     }
   };
 
