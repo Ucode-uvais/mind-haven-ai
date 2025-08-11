@@ -3,7 +3,8 @@
 
 ---
 
-## 📖 Overview  
+## 📖 Overview  <img width="1919" height="870" alt="Screenshot 2025-08-11 132713" src="https://github.com/user-attachments/assets/8e8a8f00-38aa-4a72-a6bc-5eff57621679" />
+
 Mind Haven is an **AI-powered mental health therapy platform** designed to provide accessible and empathetic support for emotional well-being.  
 It offers a **safe, private, and judgment-free** space where users can:  
 - Engage in real-time chat with a **virtual therapist**  
