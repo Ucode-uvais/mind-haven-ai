@@ -137,11 +137,18 @@ const calculateDailyStats = (activities: Activity[]): DailyStats => {
         )
       : null;
 
+  const completedActivities = todaysActivities.filter(
+    (a) => a.completed
+  ).length;
+  const completionRate =
+    todaysActivities.length > 0
+      ? Math.round((completedActivities / todaysActivities.length) * 100)
+      : 0;
   const therapySessions = activities.filter((a) => a.type === "therapy").length;
 
   return {
     moodScore: averageMood,
-    completionRate: 100,
+    completionRate: completionRate,
     mindfulnessCount: therapySessions,
     totalActivities: todaysActivities.length,
     lastUpdated: new Date(),
@@ -215,7 +222,7 @@ const DashboardPage = () => {
   const [latestMood, setLatestMood] = useState<number | null>(null);
   const [dailyStats, setDailyStats] = useState<DailyStats>({
     moodScore: null,
-    completionRate: 100,
+    completionRate: 0,
     mindfulnessCount: 0,
     totalActivities: 0,
     lastUpdated: new Date(),

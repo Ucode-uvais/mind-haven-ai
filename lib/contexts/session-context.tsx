@@ -83,6 +83,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
       console.error("Logout error:", error);
     } finally {
       localStorage.removeItem("token");
+      localStorage.removeItem("lastMood");
       setUser(null);
       router.push("/");
     }
@@ -107,7 +108,6 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     </SessionContext.Provider>
   );
 }
-
 export function useSession() {
   const context = useContext(SessionContext);
   if (context === undefined) {
