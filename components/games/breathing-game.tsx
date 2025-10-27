@@ -104,16 +104,28 @@ export function BreathingGame() {
           <div className="relative w-32 h-32 mx-auto">
             <motion.div
               animate={{
-                scale: phase === "inhale" ? 1.5 : phase === "exhale" ? 1 : 1.2,
+                scale:
+                  phase === "inhale"
+                    ? 1.5 // slowly grow (breathe in)
+                    : phase === "hold"
+                    ? 1.5 // stay still
+                    : [1.5, 1], // shrink from 1.5 to 1 (breathe out)
               }}
-              transition={{ duration: 4, ease: "easeInOut" }}
+              transition={{
+                duration:
+                  phase === "hold"
+                    ? 0 // no animation during hold
+                    : PHASE_DURATIONS[phase] / 1000, // syncs with inhale/exhale durations
+                ease: "easeInOut",
+              }}
               className="absolute inset-0 bg-primary/10 rounded-full"
             />
             <div className="absolute inset-0 flex items-center justify-center">
               <Wind className="w-8 h-8 text-primary" />
             </div>
           </div>
-          <h3 className="text-2xl font-semibold">
+
+          <h3 className="text-2xl py-5 font-semibold">
             {phase === "inhale"
               ? "Breathe In"
               : phase === "hold"

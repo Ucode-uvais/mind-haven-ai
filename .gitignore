@@ -36,8 +36,12 @@ yarn-error.log*
 # vercel
 .vercel
 
-#log files
-mind-haven-ai/backend/*.log
+# log files
+*.log
+combined.log
+error.log
+logs/
+backend/*.log
 # typescript
 *.tsbuildinfo
 next-env.d.ts

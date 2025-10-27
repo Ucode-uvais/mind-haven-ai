@@ -5,7 +5,6 @@ import { Header } from "@/components/header";
 import { Providers } from "@/components/providers";
 import { Footer } from "@/components/footer";
 import { Toaster } from "@/components/ui/sonner";
-import CursorTrail from "@/components/magicui/cursor-trail";
 import AnimatedBackground from "@/components/magicui/animated-background";
 
 const geistSans = Geist({
@@ -35,9 +34,7 @@ export default function RootLayout({
       >
         <Providers>
           <AnimatedBackground />
-          <CursorTrail />
           <Header />
-
           <main>{children}</main>
           <Footer />
           <Toaster />
